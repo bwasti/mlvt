@@ -18,7 +18,7 @@ or just copy the `mlvt.py` file!
 
 ## mlvt.Reprint
 
-The first utility is `Reprint`, which provides inline animations.
+`Reprint` helps with in-line animations.
 It works by keeping track of how much it printed so far and reprinting it when `flush()` is called.
 
 You can use the `with` statement to hijack `print` statements and `auto_flush=True` to avoid calling `flush()`
