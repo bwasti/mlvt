@@ -35,6 +35,17 @@ print("done!")
 
 ![reprint.gif](https://s3.gifyu.com/images/reprint.gif)
 
+or, if you'd prefer to avoid contexts, loop-detection and hijacked builtins
+```
+print("loading!")
+rp = mlvt.Reprint()
+for i in range(100):
+  rp.print(f"{i+1}%")
+  rp.flush()
+  time.sleep(0.02)
+print("done!")
+```
+
 ## mlvt.horiz_concat
 
 `horiz_concat` concatenates multi-line strings horizontally, accounting for padding and ANSI escape sequences
@@ -75,6 +86,7 @@ That library is great on its own, so I encourage you to check it out!
 import mlvt
 import numpy as np
 
+# all charts take in width, height, color
 hist = mlvt.Histogram(32, 8, color="bright_blue")
 hist.update(np.random.randn(100))
 print(hist)
