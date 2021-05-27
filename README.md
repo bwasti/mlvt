@@ -4,7 +4,7 @@ A single Python file with some tools for visualizing machine learning in the ter
 
 ![](https://s3.gifyu.com/images/full6615581dfdbfedcb.gif)
 
-This demo is composed of three separate utilities, which are explained below.
+This demo is composed of three ideas, which are explained below.
 Here's how to get started:
 
 ```
