@@ -217,6 +217,7 @@ class Reprint:
     def __init__(self):
         self.h = 0
         self.s = ""
+        self._print = builtins.print
 
     def add(self, s):
         self.s += ("\n" if self.s else "") + s
@@ -237,7 +238,6 @@ class Reprint:
 
     def __enter__(self):
         print(chr(27) + "[?25l", end="")
-        self._print = builtins.print
         builtins.print = self.print
         return self
 
