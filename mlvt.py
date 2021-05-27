@@ -1,4 +1,5 @@
 import builtins
+from inspect import getframeinfo, stack
 import plotille
 import numpy as np
 import re
@@ -214,15 +215,23 @@ class TextBuffer:
 
 
 class Reprint:
-    def __init__(self):
+    def __init__(self, auto_flush = False):
         self.h = 0
         self.s = ""
         self._print = builtins.print
+        self.auto_flush = auto_flush
+        self.callers = set()
 
     def add(self, s):
         self.s += ("\n" if self.s else "") + s
 
     def print(self, *args, **kwargs):
+        if self.auto_flush:
+            caller = getframeinfo(stack()[1][0])
+            n = caller.filename + ":" + str(caller.lineno)
+            if n in self.callers:
+                self.flush()
+            self.callers.add(n)
         self.add(" ".join([str(arg) for arg in args]))
 
     def flush(self):
@@ -235,6 +244,7 @@ class Reprint:
         for l in lines:
             self._print(f"{l}{clr_line}")
         self.s = ""
+        self.callers = set()
 
     def __enter__(self):
         print(chr(27) + "[?25l", end="")
@@ -242,5 +252,7 @@ class Reprint:
         return self
 
     def __exit__(self, type, value, traceback):
+        if self.auto_flush:
+            self.flush()
         builtins.print = self._print
         print(chr(27) + "[?25h", end="")

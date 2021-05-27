@@ -6,7 +6,7 @@ import time
 def train(iters):
     import math
 
-    with mlvt.Reprint() as rp:
+    with mlvt.Reprint(auto_flush=True) as rp:
         # black red green yellow blue magenta cyan white
         # bright_black bright_red bright_green bright_yellow
         # bright_blue bright_magenta bright_cyan bright_white
@@ -60,8 +60,7 @@ def train(iters):
                 )
             )
 
-            rp.flush()
-            time.sleep(0.1)
+            time.sleep(0.05)
 
 
 if __name__ == "__main__":
