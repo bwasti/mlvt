@@ -8,3 +8,5 @@ cd mlvt
 python3 -m pip install -r requirements.txt
 python3 test.py
 ````
+
+A preview can be found here: https://gfycat.com/faintclearballpython.gif
