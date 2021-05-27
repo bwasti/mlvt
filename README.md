@@ -1,6 +1,6 @@
 ## Machine Learning Visualization Tools
 
-Some tools for visualizing machine learning in the terminal.
+A single Python file with some tools for visualizing machine learning in the terminal.
 
 ![](https://s3.gifyu.com/images/full6615581dfdbfedcb.gif)
 
@@ -13,6 +13,8 @@ cd mlvt
 python3 -m pip install -r requirements.txt
 python3 test.py # demo above
 ````
+
+or just copy the `mlvt.py` file!
 
 ## mlvt.Reprint
 
