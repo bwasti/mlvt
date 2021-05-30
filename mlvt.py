@@ -59,11 +59,14 @@ class Line:
 
 
 class Histogram:
-    def __init__(self, width, height, color=None):
+    def __init__(self, width, height, color=None, bins=None):
         self.height = height
         self.width = width
         self.data = None
         self.color = color
+        self.bins = bins
+        if self.bins == None:
+          self.bins = self.width
 
     def update(self, data):
         self.data = data
@@ -74,7 +77,7 @@ class Histogram:
         return plotille.histogram(
             self.data,
             height=self.height,
-            bins=self.width,
+            bins=self.bins,
             width=self.width,
             lc=self.color,
         )
