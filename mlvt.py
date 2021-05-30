@@ -103,21 +103,27 @@ class Heatmap:
         self.color = color
 
     def update(self, data):
-        assert len(data.shape) == 2
-        self.data = data
+        assert len(data.shape) <= 2
+        if len(data.shape) == 1:
+            self.data = np.expand_dims(data, axis=0)
+        else:
+            self.data = data
 
     def show(self):
         full_x = self.data.shape[1]
         full_y = self.data.shape[0]
         kx = full_x // self.width // 2
         ky = full_y // self.height // 4
-        d = pool(self.data, (ky, kx))
+        if kx <= 0 or ky <= 0:
+            d = self.data
+        else:
+            d = pool(self.data, (ky, kx))
         c = plotille.Canvas(
             self.width, self.height, xmax=d.shape[1] + 1, ymax=d.shape[0] + 1
         )
         mean = np.mean(d)
         if self.color:
-            std = np.std(d)
+            std = np.std(d) / 2
             for x in range(d.shape[0]):
                 for y in range(d.shape[1]):
                     if d[x, y] > mean + std:
@@ -133,7 +139,7 @@ class Heatmap:
                         c.point(x, y)
                     else:
                         c.point(x, y, set_=False)
-        # c.rect(0,0,d.shape[1],d.shape[0])
+        c.rect(0, 0, d.shape[1], d.shape[0])
         return c.plot()
 
     def __str__(self):
@@ -215,7 +221,7 @@ class TextBuffer:
 
 
 class Reprint:
-    def __init__(self, auto_flush = False):
+    def __init__(self, auto_flush=False):
         self.h = 0
         self.s = ""
         self._print = builtins.print
