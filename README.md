@@ -2,19 +2,29 @@
 
 A single Python file with some tools for visualizing machine learning in the terminal.
 
-![](https://s3.gifyu.com/images/full6615581dfdbfedcb.gif)
+
+
+https://user-images.githubusercontent.com/4842908/178077497-f5c202bf-5cba-4423-a5c5-9b08ad4b5d6f.mov
+
+
 
 This demo is composed of three ideas, which are explained below.
 Here's how to get started:
 
 ```
-git clone https://github.com/bwasti/mlvt.git
-cd mlvt
-python3 -m pip install -r requirements.txt
-python3 test.py # demo above
+pip install git+https://github.com/bwasti/mlvt.git
 ````
 
 or just copy the `mlvt.py` file!
+
+Then, grab the [test.py](https://github.com/bwasti/mlvt/blob/main/test.py) file and run it on your machine:
+
+```
+curl https://raw.githubusercontent.com/bwasti/mlvt/main/test.py > test_mlvt.py
+python mlvt.py
+```
+
+Pick and choose parts of that file for your own use. :)  (Remember to use `rp.flush()`!)
 
 ## mlvt.Reprint
 
