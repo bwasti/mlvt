@@ -12,6 +12,8 @@ class Line:
         self.accumulate = accumulate
         self.data = None
         self.color = color
+        self.val = ""
+        self.changed = True
         if self.accumulate is True:
             self.data = np.array([])
         elif self.accumulate:
@@ -33,8 +35,11 @@ class Line:
                 self.cur_len += 1
         else:
             self.data = data
+        self.changed = True
 
     def show(self):
+        if not self.changed:
+            return self.val
         fig = plotille.Figure()
         fig.width = self.width
         fig.height = self.height
@@ -52,7 +57,9 @@ class Line:
         fig.set_x_limits(min_=start, max_=len(d) + start)
         fig.set_y_limits(min_=float(np.min(d)), max_=float(np.max(d)))
         fig.plot(np.arange(len(d)) + start, d, lc=self.color)
-        return fig.show()
+        self.val = fig.show()
+        self.changed = False
+        return self.val
 
     def __str__(self):
         return self.show()
@@ -64,23 +71,30 @@ class Histogram:
         self.width = width
         self.data = None
         self.color = color
+        self.val = ""
+        self.changed = True
         self.bins = bins
         if self.bins == None:
           self.bins = self.width
 
     def update(self, data):
         self.data = data
+        self.changed = True
 
     def show(self):
+        if not self.changed:
+            return self.val
         if self.data is None:
             return ""
-        return plotille.histogram(
+        self.val = plotille.histogram(
             self.data,
             height=self.height,
             bins=self.bins,
             width=self.width,
             lc=self.color,
         )
+        self.changed = False
+        return self.val
 
     def __str__(self):
         return self.show()
@@ -247,6 +261,7 @@ class Reprint:
         esc = chr(27)
         back = esc + "[1F"
         clr_line = esc + "[0K"
+        self._print(chr(27) + "[?25l", end="")
         self._print(back * self.h, end="")
         lines = self.s.split("\n")
         self.h = len(lines)
@@ -254,6 +269,7 @@ class Reprint:
             self._print(f"{l}{clr_line}")
         self.s = ""
         self.callers = set()
+        self._print(chr(27) + "[?25h", end="")
 
     def __enter__(self):
         print(chr(27) + "[?25l", end="")
