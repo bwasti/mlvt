@@ -55,7 +55,11 @@ class Line:
         if d.size <= 1:
             return ""
         fig.set_x_limits(min_=start, max_=len(d) + start)
-        fig.set_y_limits(min_=float(np.min(d)), max_=float(np.max(d)))
+        min_ = float(np.min(d))
+        max_ = float(np.max(d)) * 1.01
+        if min_ == max_:
+          max_ = min_ + 1
+        fig.set_y_limits(min_=min_, max_=max_)
         fig.plot(np.arange(len(d)) + start, d, lc=self.color)
         self.val = fig.show()
         self.changed = False
